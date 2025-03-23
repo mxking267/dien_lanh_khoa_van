@@ -4,6 +4,7 @@ import 'package:dien_lanh_khoa_van/utils/constants/image_string.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'appbar.dart';
 import 'category.dart';
 import 'features/blog/screen/blog_list_page.dart';
@@ -15,6 +16,15 @@ class HomeScreen extends StatelessWidget {
     ImageString.promoBanner2,
     ImageString.promoBanner3,
   ];
+
+  Future<void> _makePhoneCall() async {
+    final Uri uri = Uri(scheme: 'tel', path: '0344887910 ');
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Không thể gọi số ${0344887910}';
+    }
+  }
 
 
   @override
@@ -148,8 +158,7 @@ class HomeScreen extends StatelessWidget {
               bottom: 100, // Đặt cao hơn BottomNav
               right: 20,
               child: FloatingActionButton(
-                onPressed: () {
-                },
+                onPressed: _makePhoneCall,
                 heroTag: 'callButton',
                 backgroundColor: Colors.blue,
                 child: const Icon(
