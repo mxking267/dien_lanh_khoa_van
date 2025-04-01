@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592161570758",
+    "project_id": "repair-booking-5c490",
+    "storage_bucket": "repair-booking-5c490.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592161570758:android:fe8de2ba9731a7bd4efcc7",
+        "android_client_info": {
+          "package_name": "com.dien_lanh_khoa_van.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYaHUa47ozzaqN5Vzq6pv5sKRowhiG9BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

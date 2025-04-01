@@ -1,0 +1,2 @@
+/Users/tanmatlol/Downloads/Project/dien_lanh_khoa_van/android/app/.cxx/RelWithDebInfo/3q551l1g/x86_64/CMakeFiles/edit_cache.dir
+/Users/tanmatlol/Downloads/Project/dien_lanh_khoa_van/android/app/.cxx/RelWithDebInfo/3q551l1g/x86_64/CMakeFiles/rebuild_cache.dir
