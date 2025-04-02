@@ -1,7 +1,12 @@
+import 'dart:math' as math;
+
+import 'package:dien_lanh_khoa_van/main_screen.dart';
+import 'package:dien_lanh_khoa_van/presentation/screens/login/widgets/wave_painter.dart';
 import 'package:dien_lanh_khoa_van/presentation/widgets/form_control/password_input_field.dart';
 import 'package:dien_lanh_khoa_van/presentation/widgets/form_control/phone_input_field.dart';
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_constants.dart';
+import '../../../core/constants/colors.dart';
 import '../register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,101 +32,148 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 64),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(AppConstants.appName, style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 28, fontWeight: FontWeight.w700
-                )),
-                const Text(
-                  AppConstants.welcomeBack,
-                  style: TextStyle(fontSize: 14, color: Colors.blue, fontWeight: FontWeight.w400),
-                  textAlign: TextAlign.left,
-                ),
-                const SizedBox(height: 16),
-                PhoneTextField(
-                  labelText: AppConstants.phoneOrEmail
-                ),
-                const SizedBox(height: 16),
-                PasswordInputField(
-                  labelText: AppConstants.password
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight - 200,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
                   children: [
-                    Row(
+                    // Wave Header
+                    Stack(
+                      alignment: Alignment.centerLeft,
                       children: [
-                        Transform.scale(
-                          scale: 1.0, // Giữ nguyên tỷ lệ nhưng loại bỏ padding mặc định
-                          child: Checkbox(
-                            value: _rememberMe,
-                            onChanged: (value) {
-                              setState(() {
-                                _rememberMe = value ?? false;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: Colors.blue,
-                            side: const BorderSide(color: Colors.grey),
-                            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap, // Giảm vùng nhấn
-                            visualDensity: const VisualDensity(horizontal: -4, vertical: -4), // Loại bỏ padding
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4), // Điều chỉnh borderRadius tại đây
-                              )
+                        SizedBox(
+                          height: 200,
+                          child: ClipRect(
+                            child: Transform(
+                              alignment: Alignment.center,
+                              transform: Matrix4.rotationX(math.pi),
+                              child: CustomPaint(
+                                painter: WavePainter(),
+                                size: Size(MediaQuery.of(context).size.width, 250),
+                              ),
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 4), // Giảm gap giữa checkbox và text
-                        const Text(AppConstants.rememberMe),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(AppConstants.appName,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w700)),
+                              const Text(
+                                AppConstants.welcomeBack,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    TextButton(
-                      onPressed: () {
-                        // Handle forgot password
-                      },
-                      child: const Text(AppConstants.forgotPassword),
+                    // Form Content (Centered)
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Center(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(height: 8),
+                                PhoneTextField(
+                                    labelText: AppConstants.phoneOrEmail),
+                                const SizedBox(height: 8),
+                                PasswordInputField(
+                                    labelText: AppConstants.password),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1.0,
+                                          child: Checkbox(
+                                              value: _rememberMe,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _rememberMe = value ?? false;
+                                                });
+                                              },
+                                              checkColor: Colors.white,
+                                              activeColor: ThemeColors.primary,
+                                              side: const BorderSide(color: Colors.grey),
+                                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(4),
+                                              )),
+                                        ),
+                                        const SizedBox(width: 4),
+                                        const Text(AppConstants.rememberMe),
+                                      ],
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        // Handle forgot password
+                                      },
+                                      child: const Text(AppConstants.forgotPassword, style: TextStyle(color: ThemeColors.primary)),
+                                    ),
+                                  ],
+                                ),
+                                ElevatedButton(
+                                  onPressed: _submitForm,
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: ThemeColors.primary,
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 14)),
+                                  child: const Text(AppConstants.login,
+                                      style: TextStyle(fontSize: 16)),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(AppConstants.noAccount,
+                                        style: TextStyle(color: Colors.grey)),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RegisterScreen()));
+                                      },
+                                      child: const Text(AppConstants.createAccount, style: TextStyle(color: ThemeColors.primary)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Màu nền blue
-                  foregroundColor: Colors.white, // Màu chữ white
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8), // Rounded 8
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 12)
-                ),
-                child: const Text(AppConstants.login, style: TextStyle(fontSize: 16)),
               ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 0,
-                  children: [
-                    const Text(AppConstants.noAccount,style: TextStyle(color: Colors.grey)),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RegisterScreen())
-                        );
-                      },
-                      child: const Text(AppConstants.createAccount),
-                    ),
-                  ],
-                ),
-              ],
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -131,6 +183,12 @@ class _LoginScreenState extends State<LoginScreen> {
       // Handle login logic
       final phoneEmail = _phoneEmailController.text;
       final password = _passwordController.text;
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  MainScreen()));
 
       // TODO: Implement login functionality
     }

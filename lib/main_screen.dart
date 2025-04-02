@@ -1,4 +1,5 @@
 import 'package:dien_lanh_khoa_van/presentation/widgets/custom_bottom_nav_bar.dart';
+import 'package:dien_lanh_khoa_van/presentation/widgets/main_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'presentation/screens/home/home_screen.dart';
 import 'presentation/screens/services/services_screen.dart';
@@ -28,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_currentIndex],
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: CustomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

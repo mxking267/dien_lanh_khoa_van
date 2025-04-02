@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: TColors.primary,
+              color: ThemeColors.primary,
               padding: const EdgeInsets.all(0),
               child: Stack(
                 children: [
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(400),
-                      color: TColors.textWhite.withOpacity(0.1)
+                      color: ThemeColors.textWhite.withOpacity(0.1)
                     ),
                   )
                 ],

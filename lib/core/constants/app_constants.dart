@@ -1,8 +1,8 @@
 class AppConstants {
-  static const String appName = 'Đăng Nhập';
+  static const String appName = 'Đăng nhập';
 
   // Login page texts
-  static const String welcomeBack = 'Chào mừng bạn trở lại, vui lòng nhập thông tin chi tiết của bạn.';
+  static const String welcomeBack = 'Chào mừng bạn trở lại, vui lòng nhập thông tin đăng nhập.';
   static const String phoneOrEmail = 'Số điện thoại';
   static const String password = 'Mật khẩu';
   static const String rememberMe = 'Ghi nhớ đăng nhập';
